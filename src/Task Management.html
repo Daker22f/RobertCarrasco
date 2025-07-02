@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management App - Robert Carasco</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            border: 2px solid #ff6b6b;
+            color: #ff6b6b;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            background: #ff6b6b;
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+        }
+
+        .project-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            border-radius: 2px;
+        }
+
+        .project-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 10px #ff6b6b); }
+            100% { filter: drop-shadow(0 0 30px #4ecdc4); }
+        }
+
+        .project-subtitle {
+            font-size: 1.3rem;
+            color: #4ecdc4;
+            opacity: 0.9;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 193, 7, 0.2);
+            border: 2px solid #ffc107;
+            color: #ffc107;
+            border-radius: 25px;
+            font-weight: 700;
+            margin: 1rem 0;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .project-image {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(78, 205, 196, 0.3);
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .project-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .info-section {
+            margin-bottom: 2rem;
+        }
+
+        .info-title {
+            color: #4ecdc4;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .info-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background: rgba(78, 205, 196, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            border: 1px solid #4ecdc4;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 107, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff6b6b;
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #ff6b6b;
+        }
+
+        .feature-title {
+            color: #ff6b6b;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .progress-section {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            margin: 4rem 0;
+        }
+
+        .progress-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            color: #ffc107;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 75%;
+            background: linear-gradient(90deg, #ffc107, #ff6b6b);
+            border-radius: 10px;
+            animation: progressGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes progressGlow {
+            0% { box-shadow: 0 0 10px rgba(255, 193, 7, 0.5); }
+            100% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.8); }
+        }
+
+        .demo-section {
+            text-align: center;
+            margin: 4rem 0;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            border: 1px solid rgba(69, 183, 209, 0.3);
+        }
+
+        .demo-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            color: #45b7d1;
+            margin-bottom: 2rem;
+        }
+
+        .demo-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: 2px solid #45b7d1;
+            color: #45b7d1;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #45b7d1;
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .demo-btn:hover::before {
+            left: 0;
+        }
+
+        .demo-btn:hover {
+            color: #000;
+            box-shadow: 0 0 25px rgba(69, 183, 209, 0.5);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .project-title {
+                font-size: 2.5rem;
+            }
+
+            .demo-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        .floating-tasks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-tasks"></div>
+    
+    <div class="container">
+        <a href="index.html" class="back-btn">← Volver al Portafolio</a>
+        
+        <div class="project-header">
+            <h1 class="project-title">Sistema Inventario</h1>
+            <p class="project-subtitle">Aplicación de Gestión de Inventario</p>
+            <div class="status-badge">🚧 Completado</div>
+        </div>
+
+        <div class="content-grid">
+            <div class="project-image">
+                <img src="Captura de pantalla 2025-07-02 130254.png" alt="Task Management Interface">
+            </div>
+            
+            <div class="project-info">
+                <div class="info-section">
+                    <h3 class="info-title">¿PARA QUÉ SIRVE?</h3>
+                    <p class="info-text">
+                       Es un sistema de inventario ue gentiona el inventario, ventas, compras, y todo de la ferretería necesitada.
+                    </p>
+                </div>
+
+                <div class="info-section">
+                    <h3 class="info-title">TECNOLOGÍAS</h3>
+                    <div class="tech-stack">
+                        <span class="tech-tag">c#</span>
+                        <span class="tech-tag">POO</span>
+
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <h3 class="info-title">ESTADO</h3>
+                    <p class="info-text" style="color: #ffc107;">⚡Completado</p>
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">✅</div>
+                <h3 class="feature-title">Gestión de Productos</h3>
+                <p>Crear, editar y organizar Productos responsables.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3 class="feature-title">Colaboración en Tiempo Real</h3>
+                <p>Trabajar en equipo con actualizaciones instantáneas, comentarios y notificaciones push en vivo.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">Tableros Kanban</h3>
+                <p>Visualización intuitiva de proyectos con tableros drag-and-drop, columnas personalizables y métricas de progreso.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔔</div>
+                <h3 class="feature-title">Notificaciones Inteligentes</h3>
+                <p>Sistema de alertas personalizable con recordatorios, deadlines y actualizaciones de equipo en tiempo real.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3 class="feature-title">Sincronización Multi-dispositivo</h3>
+                <p>Acceso desde cualquier dispositivo con sincronización automática y funcionalidad offline con PWA.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3 class="feature-title">Análisis de Productividad</h3>
+                <p>Reportes detallados, métricas de rendimiento y análisis de tiempo para optimizar la productividad del equipo.</p>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2 class="demo-title">PRÓXIMAMENTE</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+                ¡Mantente actualizado sobre el progreso de desarrollo!
+            </p>
+            <div class="demo-buttons">
+                <a href="#" class="demo-btn">🔔 Notificarme del Lanzamiento</a>
+                <a href="#" class="demo-btn">📂 Ver Código en GitHub</a>
+                <a href="#contacto" class="demo-btn">💬 Solicitar Funcionalidad</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Crear elementos flotantes de tareas
+        function createFloatingTask() {
+            const tasks = ['📝', '✅', '⏰', '🎯', '📊', '🔔', '👥', '📱'];
+            const task = document.createElement('div');
+            task.textContent = tasks[Math.floor(Math.random() * tasks.length)];
+            task.style.position = 'absolute';
+            task.style.fontSize = '2rem';
+            task.style.left = Math.random() * window.innerWidth + 'px';
+            task.style.top = Math.random() * window.innerHeight + 'px';
+            task.style.opacity = '0.3';
+            task.style.animation = `floatTask ${Math.random() * 8 + 6}s linear infinite`;
+            
+            document.querySelector('.floating-tasks').appendChild(task);
+            
+            setTimeout(() => {
+                task.remove();
+            }, 14000);
+        }
+
+        // Crear tareas flotantes periódicamente
+        setInterval(createFloatingTask, 800);
+
+        // Animación de flotación para tareas
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatTask {
+                0% { 
+                    transform: translate(0, 0) rotate(0deg); 
+                    opacity: 0; 
+                }
+                10% { opacity: 0.3; }
+                90% { opacity: 0.3; }
+                100% { 
+                    transform: translate(${Math.random() * 200 - 100}px, -100vh) rotate(360deg); 
+                    opacity: 0; 
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Animación de progreso
+        window.addEventListener('load', () => {
+            const progressFill = document.querySelector('.progress-fill');
+            progressFill.style.width = '0%';
+            setTimeout(() => {
+                progressFill.style.transition = 'width 2s ease-out';
+                progressFill.style.width = '75%';
+            }, 500);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robert Abdiel Carasco Montero - Programador</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Fondo animado */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+        
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, #00ffff22 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, #ff00ff22 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, #ffff0022 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite alternate;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.8; }
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #00ffff;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #00ffff;
+            text-shadow: 0 0 20px #00ffff;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00ffff, #ff00ff);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Main Content */
+        main {
+            margin-top: 80px;
+        }
+        
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 8rem 2rem;
+            position: relative;
+        }
+
+        /* Marco de foto */
+        .photo-frame {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 3rem;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00);
+            padding: 4px;
+            animation: rotate 4s linear infinite;
+        }
+
+        .photo-frame::before {
+            content: '';
+            position: absolute;
+            inset: -10px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #00ffff, #ff00ff, #ffff00, #00ffff);
+            animation: rotate 8s linear infinite reverse;
+            z-index: -1;
+            filter: blur(15px);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #0a0a0a;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .hero h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            0% { filter: drop-shadow(0 0 10px #00ffff); }
+            100% { filter: drop-shadow(0 0 20px #ff00ff); }
+        }
+        
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: #00ffff;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        
+        .hero .description {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            opacity: 0.9;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            margin: 0.5rem;
+            background: transparent;
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, #00ffff, transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            color: #000;
+            background: #00ffff;
+            box-shadow: 0 0 30px #00ffff;
+            transform: translateY(-2px);
+        }
+        
+        .btn.secondary {
+            border-color: #ff00ff;
+            color: #ff00ff;
+        }
+        
+        .btn.secondary:hover {
+            background: #ff00ff;
+            box-shadow: 0 0 30px #ff00ff;
+        }
+        
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .skill-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            padding: 2rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, #00ffff, transparent);
+            animation: rotate 4s linear infinite;
+            z-index: -1;
+        }
+        
+        .skill-card::after {
+            content: '';
+            position: absolute;
+            inset: 1px;
+            background: rgba(10, 10, 10, 0.9);
+            border-radius: 9px;
+            z-index: -1;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
+        }
+        
+        .skill-card h3 {
+            color: #00ffff;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .tag {
+            background: rgba(0, 255, 255, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid #00ffff;
+        }
+        
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 0, 255, 0.3);
+            padding: 2rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff00ff;
+            box-shadow: 0 15px 30px rgba(255, 0, 255, 0.3);
+        }
+        
+        .project-card h3 {
+            color: #ff00ff;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .project-status {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            background: rgba(255, 255, 0, 0.2);
+            border: 1px solid #ffff00;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .project-link-text {
+            margin-top: 1rem; 
+            font-size: 0.9rem; 
+            color: #00ffff; 
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .project-link-text:hover {
+            text-shadow: 0 0 10px #00ffff;
+        }
+        
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-header h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-header .underline {
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #00ffff, #ff00ff);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+        
+        .contact {
+            background: rgba(255, 255, 255, 0.02);
+            margin-top: 4rem;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .contact-item .icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding: 6rem 1rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .photo-frame {
+                width: 150px;
+                height: 150px;
+            }
+        }
+        
+        /* Scroll Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+</style>
+<body>
+    <div class="bg-animation"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">ROBERT.DEV</div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#sobre-mi">Sobre Mí</a></li>
+                <li><a href="#habilidades">Habilidades</a></li>
+                <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio" class="hero">
+            <div class="photo-frame">
+                <img src="yo traje.png" alt="Robert Abdiel Carasco Montero">
+            </div>
+            <h1>ROBERT ABDIEL</h1>
+            <h2 class="subtitle">CARASCO MONTERO</h2>
+            <p class="description">
+                Desarrollador Full Stack especializado en crear experiencias digitales innovadoras. 
+                Transformo ideas en código y código en soluciones reales.
+            </p>
+            <a href="#proyectos" class="btn">Ver Proyectos</a>
+            <a href="#contacto" class="btn secondary">Contactar</a>
+        </section>
+
+        <section id="sobre-mi" class="fade-in">
+            <div class="section-header">
+                <h2>SOBRE MÍ</h2>
+                <div class="underline"></div>
+                <p>Desarrollador apasionado por crear soluciones tecnológicas innovadoras</p>
+            </div>
+            
+            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem;">
+                    Soy un desarrollador Full Stack con más de 5 años de experiencia creando aplicaciones web y móviles. 
+                    Me especializo en tecnologías modernas como React, Node.js, Python y cloud computing.
+                </p>
+                <p style="font-size: 1.1rem; line-height: 1.8; opacity: 0.9;">
+                    Mi pasión por la programación comenzó en la universidad y desde entonces he trabajado en diversos proyectos, 
+                    desde e-commerce hasta sistemas de gestión empresarial. Siempre busco aprender nuevas tecnologías y 
+                    mantenerme actualizado con las últimas tendencias del desarrollo de software.
+                </p>
+            </div>
+        </section>
+
+        <section id="habilidades" class="fade-in">
+            <div class="section-header">
+                <h2>MIS HABILIDADES</h2>
+                <div class="underline"></div>
+            </div>
+            
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Frontend Development</h3>
+                    <p>Creación de interfaces modernas y responsivas con las últimas tecnologías web.</p>
+                    <div class="skill-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Vue.js</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">HTML5</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card">
+                    <h3>Backend Development</h3>
+                    <p>Desarrollo de APIs robustas y sistemas escalables para aplicaciones web.</p>
+                    <div class="skill-tags">
+                        <span class="tag">Node.js</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">Express</span>
+                        <span class="tag">MongoDB</span>
+                        <span class="tag">PostgreSQL</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card">
+                    <h3>Mobile Development</h3>
+                    <p>Aplicaciones móviles nativas e híbridas para iOS y Android.</p>
+                    <div class="skill-tags">
+                        <span class="tag">React Native</span>
+                        <span class="tag">Flutter</span>
+                        <span class="tag">Swift</span>
+                        <span class="tag">Kotlin</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card">
+                    <h3>DevOps & Cloud</h3>
+                    <p>Despliegue y gestión de aplicaciones en la nube con mejores prácticas.</p>
+                    <div class="skill-tags">
+                        <span class="tag">AWS</span>
+                        <span class="tag">Docker</span>
+                        <span class="tag">Git</span>
+                        <span class="tag">CI/CD</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="proyectos" class="fade-in">
+            <div class="section-header">
+                <h2>PROYECTOS DESTACADOS</h2>
+                <div class="underline"></div>
+            </div>
+            
+       <div class="projects-grid">
+
+  <div class="skill-card">
+    <h3>MetroApp</h3>
+    <p class="description">
+      App para recargar tu targeta del metro con tu celular.
+    </p>
+    <div class="skill-tags">
+      <span class="tag">React</span>
+      <span class="tag">Node.js</span>
+      <span class="tag">MongoDB</span>
+      <span class="tag">Stripe</span>
+    </div>
+    <p class="subtitle">Completado</p>
+    <a class="btn" href="ecommerce.html">🔍 Ver proyecto completo</a>
+  </div>
+
+  <div class="skill-card">
+    <h3>Sistema de Inventario</h3>
+    <p class="description">
+      Aplicación de gestión de inventario para una ferretería.
+    </p>
+    <div class="skill-tags">
+      <span class="tag">c#</span>
+      <span class="tag">POO</span>
+    </div>
+    <p class="subtitle">Completado</p>
+    <a class="btn" href="Task Management.html">🔍 Ver proyecto completo</a>
+  </div>
+
+  <div class="skill-card">
+    <h3>undamned</h3>
+    <p class="description">
+     Videojuego creado en realidad virtual.
+    </p>
+    <div class="skill-tags">
+      <span class="tag">Python</span>
+      <span class="tag">Django</span>
+      <span class="tag">PostgreSQL</span>
+      <span class="tag">Chart.js</span>
+    </div>
+    <p class="subtitle">Completado</p>
+    <a class="btn" href="https://undamned.vercel.app">🔍 Ver proyecto completo</a>
+  </div>
+
+  <div class="skill-card">
+    <h3>AI Chatbot Platform</h3>
+    <p class="description">
+      Plataforma de chatbots inteligentes con procesamiento de lenguaje natural y integración multicanal.
+    </p>
+    <div class="skill-tags">
+      <span class="tag">Python</span>
+      <span class="tag">TensorFlow</span>
+      <span class="tag">NLP</span>
+      <span class="tag">AWS</span>
+    </div>
+    <p class="subtitle">En desarrollo</p>
+    <a class="btn" href="ChatAi.html">🔍 Ver proyecto completo</a>
+  </div>
+
+</div>
+
+        </section>
+
+        <section id="contacto" class="contact fade-in">
+            <div class="section-header">
+                <h2>HABLEMOS</h2>
+                <div class="underline"></div>
+                <p>¿Tienes un proyecto en mente? ¡Hagámoslo realidad juntos!</p>
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="icon">📧</div>
+                    <div>
+                        <strong>Email</strong><br>
+                        abdielcarraco01@gmail.com
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="icon">💼</div>
+                    <div>
+                        <strong>LinkedIn</strong><br>
+                        /in/robert-carasco
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="icon">🐙</div>
+                    <div>
+                        <strong>GitHub</strong><br>
+                        /robert-carasco
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 3rem;">
+                <a href="mailto:robert.carasco@dev.com?subject=Propuesta de Proyecto&body=Hola Robert,%0D%0A%0D%0AMe interesa trabajar contigo en un proyecto. Me gustaría discutir:%0D%0A%0D%0A- Tipo de proyecto:%0D%0A- Presupuesto estimado:%0D%0A- Fecha límite:%0D%0A- Detalles adicionales:%0D%0A%0D%0ASaludos," class="btn">Enviar Email</a>
+                <a href="#" class="btn secondary">Descargar CV</a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.95)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+            }
+        });
+
+        // Project redirection function
+        function redirectToProject(projectId) {
+            // Aquí defines las URLs específicas para cada proyecto
+            const projectUrls = {
+                'ecommerce': 'ecommerce-project.html',
+                'taskmanager': 'task-manager-project.html',
+                'pos': 'pos-system-project.html',
+                'chatbot': 'chatbot-platform-project.html'
+            };
+            
+            // Redirige a la página específica del proyecto
+            if (projectUrls[projectId]) {
+                window.location.href = projectUrls[projectId];
+            }
+        }
+
+        // Random floating particles
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.position = 'fixed';
+            particle.style.width = '2px';
+            particle.style.height = '2px';
+            particle.style.background = '#00ffff';
+            particle.style.borderRadius = '50%';
+            particle.style.pointerEvents = 'none';
+            particle.style.zIndex = '1';
+            particle.style.left = Math.random() * window.innerWidth + 'px';
+            particle.style.top = window.innerHeight + 'px';
+            particle.style.boxShadow = '0 0 10px #00ffff';
+            
+            document.body.appendChild(particle);
+            
+            const animation = particle.animate([
+                { transform: 'translateY(0px)', opacity: 1 },
+                { transform: `translateY(-${window.innerHeight + 100}px)`, opacity: 0 }
+            ], {
+                duration: Math.random() * 3000 + 2000,
+                easing: 'linear'
+            });
+            
+            animation.onfinish = () => particle.remove();
+        }
+
+        // Create particles periodically
+        setInterval(createParticle, 300);
+    </script>
+</body>
+</html>

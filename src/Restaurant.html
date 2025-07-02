@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant POS System - Robert Carasco</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #2c1810 0%, #8b4513 50%, #a0522d 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            border: 2px solid #ff8c00;
+            color: #ff8c00;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            background: #ff8c00;
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.5);
+        }
+
+        .project-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff8c00, #ffd700);
+            border-radius: 2px;
+        }
+
+        .project-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff8c00, #ffd700, #ff6347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 10px #ff8c00); }
+            100% { filter: drop-shadow(0 0 30px #ffd700); }
+        }
+
+        .project-subtitle {
+            font-size: 1.3rem;
+            color: #ffd700;
+            opacity: 0.9;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .project-image {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(255, 140, 0, 0.3);
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .project-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 140, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .info-section {
+            margin-bottom: 2rem;
+        }
+
+        .info-title {
+            color: #ff8c00;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .info-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background: rgba(255, 140, 0, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            border: 1px solid #ff8c00;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffd700;
+            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+
+        .feature-title {
+            color: #ffd700;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 99, 71, 0.3);
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 99, 71, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 99, 71, 0.3);
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            font-weight: 900;
+            color: #ff6347;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #ffd700;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .demo-section {
+            text-align: center;
+            margin: 4rem 0;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 140, 0, 0.3);
+        }
+
+        .demo-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            color: #ff8c00;
+            margin-bottom: 2rem;
+        }
+
+        .demo-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: 2px solid #ff8c00;
+            color: #ff8c00;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #ff8c00;
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .demo-btn:hover::before {
+            left: 0;
+        }
+
+        .demo-btn:hover {
+            color: #000;
+            box-shadow: 0 0 25px rgba(255, 140, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .project-title {
+                font-size: 2.5rem;
+            }
+
+            .demo-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .stats-section {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements"></div>
+    
+    <div class="container">
+        <a href="index.html" class="back-btn">← Volver al Portafolio</a>
+        
+        <div class="project-header">
+            <h1 class="project-title">RESTAURANT POS SYSTEM</h1>
+            <p class="project-subtitle">Sistema de Punto de Venta para Restaurantes</p>
+        </div>
+
+        <div class="content-grid">
+            <div class="project-image">
+                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=400&fit=crop" alt="Restaurant POS System Interface">
+            </div>
+            
+            <div class="project-info">
+                <div class="info-section">
+                    <h3 class="info-title">¿PARA QUÉ SIRVE?</h3>
+                    <p class="info-text">
+                        Sistema completo de punto de venta diseñado específicamente para restaurantes. Gestiona comandas, 
+                        mesas, inventario, personal y genera reportes detallados para optimizar las operaciones del negocio.
+                    </p>
+                </div>
+
+                <div class="info-section">
+                    <h3 class="info-title">TECNOLOGÍAS</h3>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Django</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Chart.js</span>
+                        <span class="tech-tag">Bootstrap</span>
+                        <span class="tech-tag">WebSocket</span>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <h3 class="info-title">ESTADO</h3>
+                    <p class="info-text" style="color: #00ff00;">✅ Proyecto Completado y Operativo</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-section">
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Restaurantes Activos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Mesas Gestionadas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">1000+</div>
+                <div class="stat-label">Comandas Procesadas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">99.9%</div>
+                <div class="stat-label">Tiempo de Actividad</div>
+            </div>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🍽️</div>
+                <h3 class="feature-title">Gestión de Mesas</h3>
+                <p>Control visual de todas las mesas del restaurante con estados en tiempo real, asignación de meseros y tiempo de ocupación.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📝</div>
+                <h3 class="feature-title">Sistema de Comandas</h3>
+                <p>Toma de pedidos intuitiva con categorías de productos, modificadores, notas especiales y envío directo a cocina.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">👨‍🍳</div>
+                <h3 class="feature-title">Panel de Cocina</h3>
+                <p>Pantalla dedicada para la cocina con cola de pedidos, tiempos de preparación y notificaciones de prioridad.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3 class="feature-title">Procesamiento de Pagos</h3>
+                <p>Múltiples métodos de pago, división de cuentas, propinas automáticas y generación de recibos digitales.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">Reportes Analíticos</h3>
+                <p>Dashboard con métricas de ventas, productos más vendidos, rendimiento de meseros y análisis de rentabilidad.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📦</div>
+                <h3 class="feature-title">Control de Inventario</h3>
+                <p>Gestión automática de stock, alertas de productos agotados y control de costos de ingredientes.</p>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2 class="demo-title">SISTEMA EN PRODUCCIÓN</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+                Sistema probado y operativo en restaurantes reales
+            </p>
+            <div class="demo-buttons">
+                <a href="#" class="demo-btn">🎥 Ver Demo del Sistema</a>
+                <a href="#" class="demo-btn">📂 Documentación Técnica</a>
+                <a href="#contacto" class="demo-btn">💬 Solicitar Implementación</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Crear elementos flotantes relacionados con restaurantes
+        function createFloatingElement() {
+            const elements = ['🍽️', '🍕', '🍔', '🥗', '🍜', '☕', '🍰', '🍷', '📊', '💰'];
+            const element = document.createElement('div');
+            element.textContent = elements[Math.floor(Math.random() * elements.length)];
+            element.style.position = 'absolute';
+            element.style.fontSize = '2rem';
+            element.style.left = Math.random() * window.innerWidth + 'px';
+            element.style.top = Math.random() * window.innerHeight + 'px';
+            element.style.opacity = '0.2';
+            element.style.animation = `floatElement ${Math.random() * 10 + 8}s linear infinite`;
+            
+            document.querySelector('.floating-elements').appendChild(element);
+            
+            setTimeout(() => {
+                element.remove();
+            }, 18000);
+        }
+
+        // Crear elementos flotantes periódicamente
+        setInterval(createFloatingElement, 1000);
+
+        // Animación de flotación
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatElement {
+                0% { 
+                    transform: translate(0, 0) rotate(0deg); 
+                    opacity: 0; 
+                }
+                10% { opacity: 0.2; }
+                90% { opacity: 0.2; }
+                100% { 
+                    transform: translate(${Math.random() * 300 - 150}px, -100vh) rotate(180deg); 
+                    opacity: 0; 
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Animación de contadores
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            const targets = ['3', '50+', '1000+', '99.9%'];
+            
+            counters.forEach((counter, index) => {
+                counter.textContent = '0';
+                
+                setTimeout(() => {
+                    counter.style.transition = 'all 1s ease-out';
+                    counter.textContent = targets[index];
+                }, 200 * index);
+            });
+        }
+
+        // Ejecutar animación cuando se carga la página
+        window.addEventListener('load', () => {
+            setTimeout(animateCounters, 1000);
+        });
+    </script>
+</body>
+</html>

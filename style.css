@@ -139,7 +139,7 @@
     height: 200px;
     margin: 0 auto 3rem;
     border-radius: 50%;
-    background: #222;
+    background: #05cddf;
     padding: 4px;
     /* animation: rotate 4s linear infinite; */ /* Ya está comentado */
 }
@@ -175,7 +175,7 @@
             font-size: clamp(2.5rem, 5vw, 4rem);
             font-weight: 900;
             margin-bottom: 1rem;
-            background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00);
+            background: linear-gradient(45deg, #00ffff, #00ffff, #00ffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;

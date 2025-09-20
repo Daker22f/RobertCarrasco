@@ -139,7 +139,7 @@
     height: 200px;
     margin: 0 auto 3rem;
     border-radius: 50%;
-    background: #05cddf;
+    background: #0adaec;
     padding: 4px;
     /* animation: rotate 4s linear infinite; */ /* Ya está comentado */
 }
@@ -147,7 +147,7 @@
 .photo-frame::before {
     content: '';
     position: absolute;
-    inset: -10px;
+    inset: -10px;   
     border-radius: 50%;
     background: none;
     z-index: -1;

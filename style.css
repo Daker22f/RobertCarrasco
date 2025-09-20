@@ -133,27 +133,27 @@
         }
 
         /* Marco de foto */
-        .photo-frame {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 3rem;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00);
-            padding: 4px;
-            animation: rotate 4s linear infinite;
-        }
+       .photo-frame {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 3rem;
+    border-radius: 50%;
+    background: #222;
+    padding: 4px;
+    /* animation: rotate 4s linear infinite; */ /* Ya está comentado */
+}
 
-        .photo-frame::before {
-            content: '';
-            position: absolute;
-            inset: -10px;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg, #00ffff, #ff00ff, #ffff00, #00ffff);
-            animation: rotate 8s linear infinite reverse;
-            z-index: -1;
-            filter: blur(15px);
-        }
+.photo-frame::before {
+    content: '';
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    background: none;
+    z-index: -1;
+    filter: none;
+    /* animation: rotate 8s linear infinite reverse; */ /* Asegúrate de que esté comentado o eliminado */
+}
 
         .photo-frame img {
             width: 100%;
@@ -161,6 +161,8 @@
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid #0a0a0a;
+            animation: none !important;
+            transform: none !important;
         }
 
         @keyframes rotate {
